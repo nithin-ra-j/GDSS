@@ -134,9 +134,9 @@ namespace GDSS.Controllers
                     Random random = new Random();
                     long vCode = random.Next(101213, 986790);
                     TempData["vCode"] = vCode;
-                    MailAddress senderAddress = new MailAddress("teambigmacs5@gmail.com", "Team Cloak");
+                    MailAddress senderAddress = new MailAddress("******", "Team Cloak");
                     MailAddress receiverAddress = new MailAddress(vEmail);
-                    string senderPassword = "abeykurian";
+                    string senderPassword = "******";
                     string subject = "Verify your email";
                     string body = "Thank you for choosing Cloak! " +
                         "To verify your email, please enter the following code in your signup page:<br/><br/><b style='font-size:1.5em'>"
@@ -293,9 +293,9 @@ namespace GDSS.Controllers
                     Random random = new Random();
                     long vCode = random.Next(101213, 986790);
                     TempData["vCode"] = vCode;
-                    MailAddress senderAddress = new MailAddress("teambigmacs5@gmail.com", "Team Cloak");
+                    MailAddress senderAddress = new MailAddress("******", "Team Cloak");
                     MailAddress receiverAddress = new MailAddress(vEmail);
-                    string senderPassword = "abeykurian";
+                    string senderPassword = "******";
                     string subject = "Reset your password";
                     string body = "To reset your password, please enter the following code in your password reset page:<br/><br/><b style='font-size:1.5em'>"
                         + vCode + "</b><br/><br/>Get discussing!";
@@ -421,8 +421,8 @@ namespace GDSS.Controllers
             string discussionDescription = dBEntities.Discussions.Find(discussionID).Description;
             List<string> tempEmails = new List<string>();
 
-            MailAddress senderAddress = new MailAddress("teambigmacs5@gmail.com", "Team Cloak");
-            string senderPassword = "abeykurian";
+            MailAddress senderAddress = new MailAddress("******", "Team Cloak");
+            string senderPassword = "******";
             string subject = "Discussion Invitation";
 
             RNGCryptoServiceProvider rngCryptoServiceProvider = new RNGCryptoServiceProvider();
