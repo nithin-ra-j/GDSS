@@ -1,0 +1,648 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Moderator Signup";
+}
+
+<body>
+    <form id="regForm" class="regForm" style="width:50%;height:auto" name="reggg" method="post" action="~/Moderator/PerformSignUp">
+
+        <div class="tab">
+
+            <fieldset>
+                <div class="moderatorLogo">
+                    <i style="font-size:60px; margin-top:20px" class="fas fa-users"></i>
+                </div>
+                <h1 class="fs-title">Enter Your Details</h1>
+                <h2 class="fs-subtitle">You are the moderator!</h2>
+                <br /><br />
+                <label for="firstname">First Name</label> <span id="error-firstName" style="color:red;font-size:small "> </span>
+
+                <span id="labelname" style="color:red"></span>
+                <input type="text" id="firstName" name="firstname" placeholder="First Name" required />
+                <label for="lname">Last Name</label> <span id="error-lastName" style="color:red;font-size:small "> </span>
+                <span id="labellname" style="color:red"></span>
+                <input type="text" id="lname" name="lastname" placeholder="Last Name" required />
+
+
+                <label for="txtEmail">Email</label> <span id="error-Email" style="color:red;font-size:small "> </span>
+
+                <input type="email" name="email" id="txtEmail" value="@ViewBag.Email" style="background:lightgray" required readonly />
+                <span id="lblError" style="color:red"></span>
+                <br />
+
+                <div class="form-group">
+                    <label for="myInput">
+                        Password
+
+                        <a style="cursor:pointer" onclick="showPasswordFunction()">
+                            <i class="fas fa-eye point"></i>
+                        </a>
+                    </label> <span id="error-Password" style="color:red;font-size:small"> </span>
+                    <input type="password" name="password" class="form-control" id="myInput" placeholder="Password">
+                    <div class="progress">
+                        <div class="progress-bar"></div>
+                    </div>
+                </div>
+
+
+
+
+
+
+                <label for="cpass">Confirm Password</label> <span id="error-confirmPassword" style="color:red;font-size:small"> </span>
+                <input type="password" id="cpass" placeholder="Confirm Password" required />
+
+
+
+                <div class="captcha">
+                    <div class="spinner">
+                        <label>
+                            <input type="checkbox" id="chk">
+                            <span class="checkmark"><span>&nbsp;</span></span>
+                        </label>
+                    </div>
+                    <div class="text">
+                        I'm not a robot
+                    </div>
+                    <div class="logo">
+                        <img src="https://forum.nox.tv/core/index.php?media/9-recaptcha-png/" />
+                        <p>reCAPTCHA</p>
+                        <small>Privacy - Terms</small>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+
+        <div class="tab">
+
+            <fieldset>
+                <div class="header">
+                    <img src="~/Content/logod.jpg" alt="logo" />
+                </div>
+                <h1 class="fs-title">Create discussion</h1>
+                <h2 class="fs-subtitle">set discussion parameters!</h2>
+                <br /><br />
+                <label for="Topic">Topic</label> <span id="error-topic" style="color:red;font-size:small "> </span>
+                <input type="text" name="Topic" id="Topic" placeholder="Please enter the topic for the discussion">
+                <label for="message">Description</label> <span id="error-message" style="color:red;font-size:small "> </span>
+                <div style="font-size:10px">  Remaining Character  <span id="count"> </span></div>
+                <textarea id="message" cols="30" name="Description" rows="10" maxlength="3000" placeholder="Please enter the description of the discussion"></textarea>
+                <label for="cname">Client's Name</label> <span id="error-clName" style="color:red;font-size:small "> </span>
+                <span id="errorcname" style="color:red;font-size:small "> </span>
+                <input type="text" name="ClientName" id="cname" placeholder="Please enter the client's name">
+                <label for="clientEmmail">Email</label> <span id="error-clientEmail" style="color:red;font-size:small "> </span>
+                <span id="clerror" style="color:red"></span>
+                <input type="email" id="clientEmmail" name="ClientEmail" placeholder="Please enter client's email address">
+
+                <label for="sdate">Start date and time</label> <span id="error-sdate" style="color:red;font-size:small "> </span>
+                <input type="datetime-local" id="sdate" name="StartDateTime">
+
+                <label for="ddate">Deletion date and time</label> <span id="error-ddate" style="color:red;font-size:small "> </span>
+                <input type="datetime-local" id="ddate" name="DeletionDateTime">
+            </fieldset>
+        </div>
+
+        <div style="overflow:auto;">
+            <div style="float:right;">
+                <button type="button" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                <button type="button" id="nextBtn" onclick="return formValidation()">Next</button>
+
+            </div>
+        </div>
+    </form>
+    <!-- Circles which indicates the steps of the form: -->
+    <div style="text-align:center;margin-top:40px;">
+        <span class="step"></span>
+        <span class="step"></span>
+
+    </div>
+
+    <div id="logo">
+        <img src="~/Content/GDSS Logo.png" />
+    </div>
+
+
+    <script>
+        var currentTab = 0; // Current tab is set to be the first tab (0)
+        showTab(currentTab); // Display the current tab
+
+        function tryFunction() {
+            document.getElementById("regForm").submit();
+        }
+
+        function showTab(n) {
+            // This function will display the specified tab of the form...
+            var x = document.getElementsByClassName("tab");
+            x[n].style.display = "block";
+            //... and fix the Previous/Next buttons:
+            if (n == 0) {
+                document.getElementById("prevBtn").style.display = "none";
+            } else {
+                document.getElementById("prevBtn").style.display = "inline";
+            }
+            if (n == (x.length - 1)) {
+                document.getElementById("nextBtn").innerHTML = "Submit";
+                //document.getElementById("nextBtn").setAttribute("type", "submit");
+            } else {
+                document.getElementById("nextBtn").innerHTML = "Next";
+                //document.getElementById("nextBtn").setAttribute("type", "button");
+            }
+            //... and run a function that will display the correct step indicator:
+            fixStepIndicator(n)
+        }
+
+        function nextPrev(n) {
+            // This function will figure out which tab to display
+            var x = document.getElementsByClassName("tab");
+            if (n == -1)
+                document.getElementById("nextBtn").setAttribute("type", "button");
+            // Exit the function if any field in the current tab is invalid:
+            if (n == 1 && !validateForm()) return false;
+            // Hide the current tab:
+            x[currentTab].style.display = "none";
+            // Increase or decrease the current tab by 1:
+            currentTab = currentTab + n;
+            // if you have reached the end of the form...
+            if (currentTab >= x.length) {
+                // ... the form gets submitted:
+                document.getElementById("regForm").submit();
+                return false;
+            }
+            // Otherwise, display the correct tab:
+            showTab(currentTab);
+        }
+
+        function validateForm() {
+            // This function deals with validation of the form fields
+            var x, y, i, valid = true;
+            x = document.getElementsByClassName("tab");
+            y = x[currentTab].getElementsByTagName("input");
+            // A loop that checks every input field in the current tab:
+            for (i = 0; i < y.length; i++) {
+                // If a field is empty...
+                if (y[i].value == "") {
+                    // add an "invalid" class to the field:
+                    y[i].className += " invalid";
+                    // and set the current valid status to false
+                    valid = false;
+                }
+            }
+            // If the valid status is true, mark the step as finished and valid:
+            if (valid) {
+                document.getElementsByClassName("step")[currentTab].className += " finish";
+            }
+            return valid; // return the valid status
+        }
+
+        function fixStepIndicator(n) {
+            // This function removes the "active" class of all steps...
+            var i, x = document.getElementsByClassName("step");
+            for (i = 0; i < x.length; i++) {
+                x[i].className = x[i].className.replace(" active", "");
+            }
+            //... and adds the "active" class on the current step:
+            x[n].className += " active";
+        }
+
+        function showPasswordFunction() {
+            var x = document.getElementById("myInput");
+            if (x.type === "password") {
+                x.type = "text";
+            } else {
+                x.type = "password";
+            }
+        }
+
+
+
+
+
+        function captcha() {
+
+            var checkbox = document.getElementById("chk");
+
+            if (checkbox.checked == true) {
+                return nextPrev(1);
+            }
+            else {
+
+
+                alert("Please Verify that you are a human")
+            }
+
+
+        }
+
+
+        /* Count */
+
+        var maxchar = 3000;
+        var i = document.getElementById("message");
+        var c = document.getElementById("count");
+        c.innerHTML = maxchar;
+
+        i.addEventListener("keydown", count);
+
+        function count(e) {
+            var len = i.value.length;
+            if (len >= maxchar) {
+                e.preventDefault();
+            } else {
+                c.innerHTML = maxchar - len - 1;
+            }
+        }
+
+
+
+
+    </script>
+
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js" type="text/javascript"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+        });
+    </script>
+
+    <script>
+
+
+
+
+        $(function () {
+            $.fn.bootstrapPasswordMeter = function (options) {
+                var settings = $.extend({
+                    minPasswordLength: 6,
+                    level0ClassName: 'progress-bar-danger',
+                    level0Description: 'Weak',
+                    level1ClassName: 'progress-bar-danger',
+                    level1Description: 'Not great',
+                    level2ClassName: 'progress-bar-warning',
+                    level2Description: 'Better',
+                    level3ClassName: 'progress-bar-success',
+                    level3Description: 'Strong',
+                    level4ClassName: 'progress-bar-success',
+                    level4Description: 'Very strong',
+                    parentContainerClass: '.form-group'
+                }, options || {});
+
+                $(this).on("keyup", function () {
+                    var progressBar = $(this).closest(settings.parentContainerClass).find('.progress-bar');
+                    var progressBarWidth = 0;
+                    var progressBarDescription = '';
+                    if ($(this).val().length >= settings.minPasswordLength) {
+                        var zxcvbnObj = zxcvbn($(this).val());
+                        progressBar.removeClass(settings.level0ClassName)
+                            .removeClass(settings.level1ClassName)
+                            .removeClass(settings.level2ClassName)
+                            .removeClass(settings.level3ClassName)
+                            .removeClass(settings.level4ClassName);
+                        switch (zxcvbnObj.score) {
+                            case 0:
+                                progressBarWidth = 25;
+                                progressBar.addClass(settings.level0ClassName);
+                                progressBarDescription = settings.level0Description;
+                                break;
+                            case 1:
+                                progressBarWidth = 25;
+                                progressBar.addClass(settings.level1ClassName);
+                                progressBarDescription = settings.level1Description;
+                                break;
+                            case 2:
+                                progressBarWidth = 50;
+                                progressBar.addClass(settings.level2ClassName);
+                                progressBarDescription = settings.level2Description;
+                                break;
+                            case 3:
+                                progressBarWidth = 75;
+                                progressBar.addClass(settings.level3ClassName);
+                                progressBarDescription = settings.level3Description;
+                                break;
+                            case 4:
+                                progressBarWidth = 100;
+                                progressBar.addClass(settings.level4ClassName);
+                                progressBarDescription = settings.level4Description;
+                                break;
+                        }
+                    } else {
+                        progressBarWidth = 0;
+                        progressBarDescription = '';
+                    }
+                    progressBar.css('width', progressBarWidth + '%');
+                    progressBar.text(progressBarDescription);
+                });
+            };
+            $('#myInput').bootstrapPasswordMeter({ minPasswordLength: 1 });
+        });
+    </script>
+
+
+    <script>
+
+
+        function formValidation() {
+            var fname = document.forms["reggg"]["firstname"].value;
+            var lname = document.forms["reggg"]["lastname"].value;
+            var email = document.forms["reggg"]["email"].value;
+            var password = document.forms["reggg"]["password"].value;
+            var confirmpass = document.getElementById("cpass").value;
+            var topic = document.forms["reggg"]["Topic"].value;
+            var description = document.forms["reggg"]["Description"].value;
+            var clientname = document.forms["reggg"]["ClientName"].value;
+            var clemail = document.forms["reggg"]["ClientEmail"].value;
+            var sdate = document.forms["reggg"]["StartDateTime"].value;
+            var ddate = document.forms["reggg"]["DeletionDateTime"].value;
+            var password = document.getElementById("myInput").value;
+            var confirmPassword = document.getElementById("cpass").value;
+            if (fname == "") {
+
+
+                document.getElementById('error-firstName').innerHTML = " &nbsp;Please enter your First Name *"
+                document.reggg.firstname.focus();
+                return false;
+            }
+
+            if (fname != "") {
+
+                document.getElementById('error-firstName').style.visibility = "hidden";
+
+
+                var firstn = document.getElementById("firstName").value;
+                var labelname = document.getElementById("labelname");
+                labelname.innerHTML = "";
+                var expr = /^([a-zA-Z ]){2,30}$/
+                if (!expr.test(firstn)) {
+                    labelname.innerHTML = "Invalid First Name.";
+                    return false;
+
+                }
+
+
+            }
+
+
+
+
+
+
+            if (lname == "") {
+                document.getElementById('error-lastName').innerHTML = " &nbsp;Please enter your Last Name *"
+                document.reggg.lastname.focus();
+                return false;
+            }
+
+            if (lname != "") {
+                document.getElementById('error-lastName').style.visibility = "hidden";
+
+
+                var lastn = document.getElementById("lname").value;
+                var labellname = document.getElementById("labellname");
+                labellname.innerHTML = "";
+                var expr = /^([a-zA-Z ]){1,30}$/;
+
+                if (!expr.test(lastn)) {
+                    labellname.innerHTML = "Invalid Last Name.";
+                    return false;
+
+                }
+
+
+
+
+            }
+
+            if (email == "") {
+
+                document.getElementById('error-Email').innerHTML = " &nbsp;Please enter your Email ID *"
+                document.reggg.email.focus();
+                return false;
+            }
+
+            if (email != "") {
+                document.getElementById('error-Email').style.visibility = "hidden";
+                var email = document.getElementById("txtEmail").value;
+                var lblError = document.getElementById("lblError");
+                lblError.innerHTML = "";
+                var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if (!expr.test(email)) {
+                    lblError.innerHTML = "Invalid email address.";
+                    return false;
+
+                }
+
+
+            }
+
+
+
+            if (password == "") {
+
+                document.getElementById('error-Password').innerHTML = "  &nbsp;Please enter your Password *"
+                document.reggg.password.focus();
+                return false;
+            }
+
+            if (password != "") {
+                document.getElementById('error-Password').style.visibility = "hidden";
+
+            }
+
+
+            if (confirmpass == "") {
+
+                document.getElementById('error-confirmPassword').innerHTML = "   &nbsp;Please enter the Confirm Password *"
+                document.getElementById("cpass").focus();
+                return false;
+            }
+
+
+
+            if (confirmpass != "") {
+                document.getElementById('error-confirmPassword').style.visibility = "hidden";
+                if (password != confirmPassword) {
+                    alert("Passwords do not match.");
+                    return false;
+                }
+            }
+
+
+
+
+            if (topic == "") {
+
+                /*document.getElementById('error-topic').innerHTML = "   &nbsp;Please enter the Topic *" */
+                document.reggg.Topic.focus();
+                return captcha();
+            }
+
+            if (topic != "") {
+                document.getElementById('error-topic').style.visibility = "hidden";
+
+            }
+
+
+
+
+            if (description == "") {
+
+                document.getElementById('error-message').innerHTML = "   &nbsp;Please enter Description *"
+                document.reggg.Description.focus();
+                return captcha();
+            }
+
+            if (description != "") {
+                document.getElementById('error-message').style.visibility = "hidden";
+
+            }
+
+
+
+            if (clientname == "") {
+
+                document.getElementById('error-clName').innerHTML = "   &nbsp;Please enter Client Name *"
+                document.reggg.ClientName.focus();
+                return captcha();
+            }
+
+            if (clientname != "") {
+                document.getElementById('error-clName').style.visibility = "hidden";
+
+                var lastn = document.getElementById("cname").value;
+                var errorcname = document.getElementById("errorcname");
+                errorcname.innerHTML = "";
+                var expr = /^([a-zA-Z ]){1,30}$/;
+
+                if (!expr.test(lastn)) {
+                    errorcname.innerHTML = "Invalid Client Name.";
+                    return captcha();
+
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+            if (clemail == "") {
+
+                document.getElementById('error-clientEmail').innerHTML = "   &nbsp;Please enter Client Email*"
+                document.reggg.ClientEmail.focus();
+                return captcha();
+
+            }
+
+            if (clemail != "") {
+                document.getElementById('error-clientEmail').style.visibility = "hidden";
+                var email = document.getElementById("clientEmmail").value;
+                var clerror = document.getElementById("clerror");
+                clerror.innerHTML = "";
+
+                var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if (!expr.test(email)) {
+                    clerror.innerHTML = "&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;Invalid email address.";
+                    return captcha();
+                }
+            }
+
+            if (sdate == "") {
+
+                document.getElementById('error-sdate').innerHTML = "   &nbsp;Please select the start date*"
+
+                return captcha();
+            }
+
+            if (sdate != "") {
+                document.getElementById('error-sdate').style.visibility = "hidden";
+
+            }
+
+            if (ddate == "") {
+
+                document.getElementById('error-ddate').innerHTML = "   &nbsp;Please select the End date*"
+
+                return false();
+            }
+
+
+
+
+
+
+
+
+            if (ddate != "") {
+                document.getElementById('error-ddate').style.visibility = "hidden";
+                return tryFunction();
+            }
+
+
+
+
+
+
+
+
+        }
+
+
+
+        $("#ddate").change(function () {
+            var startDate = document.getElementById("sdate").value;
+            var endDate = document.getElementById("ddate").value;
+
+            if ((Date.parse(startDate) >= Date.parse(endDate))) {
+                alert("End date should be after the Start date");
+                document.getElementById("ddate").value = "";
+            }
+        });
+
+
+
+
+        $(document).ready(function () {
+
+
+
+            var input = document.getElementById("sdate");
+            var today = new Date();
+
+            var ddate = today.getDate();
+            if (ddate < 10) { ddate = "0" + ddate; }
+            var month = today.getMonth() + 1;
+            if (month < 10) { month = "0" + month; }
+            var date = today.getFullYear() + '-' + month + '-' + ddate;
+            var t1 = today.getHours();
+            if (t1 < 10) { t1 = "0" + t1; }
+            var t2 = today.getMinutes();
+            if (t2 < 10) { t2 = "0" + t2; }
+            var time = t1 + ":" + t2;
+            var dateTime = date + 'T' + time;
+            input.setAttribute('min', dateTime);
+
+        });
+
+
+
+
+
+
+
+
+    </script>
+
+
+</body>
+

@@ -1,0 +1,89 @@
+﻿
+@{
+    ViewBag.Title = "Verify Email";
+}
+
+
+<script type="text/javascript">
+    function resendCode(){
+        if($("#resendMessage").length){
+            $("#resendMessage").remove();
+        }
+        if($("#codeError").length){
+            $("#codeError").remove();
+        }
+        $("#loading").css("visibility", "visible");
+        $.post("/Moderator/VerifyEmail", {param:'@ViewBag.Email',resend: 'true'}, function(message){
+            $("#loading").css("visibility", "hidden");
+            $("#btnResend").after("<br/><label id='resendMessage'>"+message+"</label>");
+        });
+    }
+</script>
+
+<h2>Verify Email</h2>
+
+<form id="vForm" class="regForm" method="post" action="~/Moderator/VerifyEmail">
+    <h5>A verification code has been sent to @ViewBag.Email</h5>
+    <label for="vCode">Enter the code here:</label>
+    <input type="text" id="vCode" name="param" />
+    <button type="submit">Continue</button>
+    <button type="button" id="btnResend" onclick="resendCode()" style="float:right;background:green">Send another code</button>
+    @if (ViewBag.Error != null)
+    {
+        <br /><label id="codeError" class="text-danger">@ViewBag.Error</label>
+    }
+    <div class="loader" id="loading" style="float:right;visibility:hidden"></div>
+</form>
+
+<div id="logo">
+    <img src="~/Content/GDSS Logo.png" />
+</div>
+
+<style>
+    .loader {
+        border: 4px solid #f3f3f3; /* Light grey */
+        border-top: 4px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+
+
+
+
+
+<!--<div class="c-email" style="height:100%">
+    <div class="c-email__header">
+        <h1 class="c-email__header__title">Your Verification Code</h1>
+    </div>
+    <div class="c-email__content">
+        <p class="c-email__content__text text-title">
+            Enter verification code in the field:
+        </p>
+        <div class="c-email__code">
+            <form method="post" action="~/Moderator/VerifyEmail">-->
+@*<label for="vCode">Enter verification code:</label>*@
+<!--<input type="text" id="vCode" name="param" />
+        <button type="submit">Continue</button>
+        if (ViewBag.Error != null)
+        {
+            <br /><label class="text-danger">ViewBag.Error</label>
+        }
+    </form>
+</div>-->
+@*<p class="c-email__content__text text-italic opacity-30 text-title mb-0">Verification code is valid only for 30 minutes</p>*@
+<!--</div>
+    <div class="c-email__footer"></div>
+</div>-->

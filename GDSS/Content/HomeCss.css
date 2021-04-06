@@ -1,0 +1,113 @@
+.outer {
+    height: 100vh;
+    min-width: 20vw;
+    flex: 1;
+}
+
+.progress {
+    display: inline-flex;
+    height: 65%;
+    padding: 1vh 10%;
+}
+
+    .progress > div {
+        display: flex;
+        flex-direction: column;
+        color: #333;
+    }
+
+        .progress > div.left {
+            padding-right: 20px;
+            text-align: right;
+        }
+
+            .progress > div.left div:last-of-type:after {
+                display: none;
+            }
+
+            .progress > div.left div:after {
+                content: "";
+                background: rgba(51, 51, 51, 0.1);
+                border-radius: 2px;
+                position: absolute;
+                right: -20px;
+                top: 10px;
+                height: 101%;
+                width: 1px;
+                transform: translateX(50%);
+            }
+
+        .progress > div.right {
+            padding-left: 20px;
+        }
+
+            .progress > div.right div.prev:after {
+                transition: none;
+            }
+
+            .progress > div.right div.current {
+                color: #333;
+                font-weight: bold;
+            }
+
+                .progress > div.right div.current:before {
+                    background: #333;
+                    padding: 10px;
+                    transition: all 0.2s 0.15s cubic-bezier(0.175, 0.885, 0.32, 2);
+                }
+
+                .progress > div.right div.current:after {
+                    height: 0%;
+                    transition: height 0.2s ease-out;
+                }
+
+                .progress > div.right div.current ~ div {
+                    color: #666;
+                }
+
+                    .progress > div.right div.current ~ div:before {
+                        background: #666;
+                        padding: 2.5px;
+                    }
+
+                    .progress > div.right div.current ~ div:after {
+                        height: 0%;
+                        transition: none;
+                    }
+
+            .progress > div.right div:before {
+                content: "";
+                background: #333;
+                padding: 5px;
+                border-radius: 50%;
+                position: absolute;
+                left: -20px;
+                top: 10px;
+                transform: translateX(-50%) translateY(-50%);
+                transition: padding 0.2s ease;
+            }
+
+            .progress > div.right div:after {
+                content: "";
+                background: #333;
+                border-radius: 2px;
+                position: absolute;
+                left: -20px;
+                top: 10px;
+                height: 101%;
+                width: 2px;
+                transform: translateX(-50%);
+                transition: height 0.2s ease;
+            }
+
+        .progress > div div {
+            flex: 1;
+            position: relative;
+            line-height: 20px;
+            cursor: default;
+            min-height: 30px;
+        }
+
+            .progress > div div:last-of-type {
+                flex: 0;
+            }

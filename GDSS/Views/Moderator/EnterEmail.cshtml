@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "Enter Email";
+}
+
+<h2>Reset Password</h2>
+<form class="regForm" style="width:50%; margin-bottom:500px" method="post" action="ResetPassword">
+    <h5>Enter your email</h5>
+    <fieldset>
+        <input type="email" name="param" id="email" />
+        <button type="submit">Submit</button>
+    </fieldset>
+    @if (ViewBag.Error != null)
+    {
+        <br /><label class="text-danger">@ViewBag.Error</label>
+    }
+</form>
+
+<div id="logo">
+    <img src="~/Content/GDSS Logo.png" />
+</div>

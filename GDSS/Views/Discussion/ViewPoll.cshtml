@@ -1,0 +1,75 @@
+﻿
+@{
+    ViewBag.Title = "View Poll";
+}
+
+@using GDSS.Models;
+
+@{
+    PollOption pollOption;
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/Content/Poll.css">
+</head>
+<body>
+    <div class="poll">
+        <h3>Question : </h3>
+        <h4 class="question">@ViewBag.Question</h4>
+        <hr />
+        @if (@ViewBag.PollVote != null)
+        {
+
+            <span id="vote-count">@ViewBag.NoOfVotes vote(s)</span>
+
+        }
+        else
+        {
+            <span id="vote-count" hidden>@ViewBag.NoOfVotes vote(s)</span>
+        }
+        <hr />
+        @for (int i = 0; i < ViewBag.Options.Length; i++)
+        {
+            pollOption = @ViewBag.Options[i];
+            <!-- loop this section according to 'data' array START -->
+            <div class="poll-item">
+                <p hidden>@pollOption.Id</p>
+                <label style="font-weight:bold">@pollOption.Option</label>
+                @if (ViewBag.PollVote == null)
+                {
+                    <button id="btnVote">Vote</button>
+                    <span class="spanVote" style="background:#033890" hidden></span>
+                }
+                else
+                {
+                    <button hidden>Vote</button>
+                    <span class="spanVote" style="background:#033890">@pollOption.VotePercentage%</span>
+                }
+
+            </div>
+            <!-- loop this section according to 'data' array END -->
+        }
+
+    </div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+        $(".poll").parent().removeAttr("style");
+        $('.poll-item').each(function () {
+            var width = $(this).find("#spanVote").text();
+            if (width == "0%")
+                width = "2%";
+            $(this).find(".spanVote").css("width", width);
+        });
+        $('.poll-item').on('click', '#btnVote', function () {
+            var parent = $(this).parent();
+            var id = parent.find('p').text();
+            $.post("RegisterVote", { id }, function () {
+                location.reload();
+            });
+        });
+    });
+</script>

@@ -1,0 +1,162 @@
+﻿@{
+    ViewBag.Title = "Moderator Room";
+}
+
+@using GDSS.Models;
+
+
+@{ Discussion discussion = ViewBag.Discussion;}
+
+<script>
+    var status = "@discussion.Status";
+    window.onload = function() {
+        if (status == "Upcoming") {
+            $("#status").css("color", "goldenrod");
+            $("#divPause").addClass("disabledbutton");
+        }
+        else if (status == "Active")
+            $("#status").css("color", "green");
+        else if (status == "Paused") {
+            $("#status").css("color", "orange");
+            $("#txtPause").text("Resume Discussion");
+            $("#iPause").removeClass("fa-pause-circle");
+            $("#iPause").addClass("fa-play-circle");
+        }
+        else if (status == "Ended") {
+            $("#status").css("color", "red");
+            $(".icon-container").addClass("disabledbutton");
+        }
+    }
+
+    function togglePause() {
+        $("#divPause").addClass("disabledbutton");
+        $.post("/Discussion/TogglePause", function (message) {
+            alert(message);
+            if ($("#txtPause").text() == "Pause Discussion") {
+                $("#txtPause").text("Resume Discussion");
+                $("#iPause").removeClass("fa-pause-circle");
+                $("#iPause").addClass("fa-play-circle");
+                $("#status").text("Paused");
+                $("#status").css("color", "orange");
+            } else {
+                $("#txtPause").text("Pause Discussion");
+                $("#iPause").removeClass("fa-play-circle");
+                $("#iPause").addClass("fa-pause-circle");
+                $("#status").text("Active");
+                $("#status").css("color", "green");
+            }
+            $("#divPause").removeClass("disabledbutton");
+        })
+    }
+
+    function endDiscussion() {
+        if (confirm("Are you sure you want to end this discussion? This action cannot be undone.")) {
+            $("#divEnd").addClass("disabledbutton");
+            $.post("/Discussion/EndDiscussion", function (message) {
+                alert(message);
+                $(".icon-container").addClass("disabledbutton");
+                $("#status").text("Ended");
+                $("#status").css("color", "red");
+            })
+        }
+    }
+</script>
+
+<style>
+    .disabledbutton {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+</style>
+
+<html>
+<head>
+    <script src="https://kit.fontawesome.com/9486839852.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/ModeratorStyle.css">
+
+
+</head>
+
+
+<body>
+    <button style="float:right" onclick="location.href='@Url.Action("Logout")'">Log out</button>
+
+    <div class="container2">
+        <div class="content">
+            <h1>MODERATOR ROOM</h1>
+            <div style="border: 1px solid black;background-color:azure;width:auto;padding:8px;border-radius:4px">
+                <h3>Discussion:</h3>
+                <h5>@discussion.Topic</h5>
+                <p style="text-align:left;font-size:1em">@discussion.Description</p><br />
+                <div class="status" style="margin: 0 auto"> <p style="text-align:center">Status: <span id="status">@discussion.Status</span></p></div>
+            </div>
+            <hr />
+            <div class="icon-container">
+                <div class="icon icon-expand" onclick="location.href='../Discussion/Dashboard'">
+                    <i class="fas fa-chalkboard"></i>
+                    <div class="image-text">
+                        <h2>Dashboard</h2>
+                    </div>
+                </div>
+
+                <div class="icon icon-expand" onclick="location.href='Tools'">
+
+                    <i class="fas fa-tools"></i>
+                    <div class="image-text">
+                        <h2>Add Tools</h2>
+
+                    </div>
+                </div>
+                <div class="icon icon-expand" onclick="location.href='InviteParticipants'">
+                    <i class="fas fa-user-plus"></i>
+                    <div class="image-text">
+                        <h2>Invite Participants</h2>
+                    </div>
+                </div>
+                @*<div class="icon icon-expand">
+                        <i class="fas fa-binoculars"></i>
+                        <div class="image-text">
+                            <h2>View Participants</h2>
+                        </div>
+                    </div>
+                    <div class="icon icon-expand">
+                        <i class="fas fa-people-arrows"></i>
+                        <div class="image-text">
+                            <h2>Split Groups</h2>
+                        </div>
+                    </div>*@
+
+            </div>
+            <div class="icon-container">
+
+                <div class="icon icon-expand" onclick="location.href='../Discussion/EditDiscussion'">
+                    <i class="fas fa-edit"></i>
+                    <div class="image-text">
+                        <h2>Edit Discussion</h2>
+                    </div>
+                </div>
+                <div id="divPause" onclick="togglePause()" class="icon icon-expand">
+                    <i id="iPause" class="far fa-pause-circle"></i>
+                    <div class="image-text">
+                        <h2 id="txtPause">Pause Discussion</h2>
+                    </div>
+                </div>
+                <div id="divEnd" onclick="endDiscussion()" class="icon icon-expand">
+                    <i class="far fa-stop-circle"></i>
+                    <div class="image-text">
+                        <h2>End Discussion</h2>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+
+</html>

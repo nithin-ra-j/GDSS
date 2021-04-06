@@ -1,0 +1,25 @@
+﻿@using GDSS.Models;
+
+
+@{
+    ViewBag.Title = "Choose Discussion";
+}
+
+<button style="float:right" onclick="location.href='@Url.Action("Logout")'">Log out</button>
+
+<h2>Choose a discussion or create one</h2>
+
+<br />
+<button onclick="location.href='@Url.Action("CreateDiscussion")'">Create discussion</button>
+<br />
+
+@foreach (Discussion discussion in ViewBag.Discussions)
+{
+    <br />
+    <br />
+    <div style="cursor:pointer;display:inline-block;padding:8px" onclick="location.href='@Url.Action("CallModeratorRoom",new { discussionID=discussion.Id })'">
+        <h4 style="display:inline">@discussion.Topic</h4><br />
+        <h6 style="display:inline;color:gray">Auto-deletion on @discussion.DeletionDateTime</h6>
+    </div>
+    <hr />
+}

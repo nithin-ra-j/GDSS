@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "Participant Registration";
+}
+
+<script type="text/javascript">
+    function generateUsername() {
+        $("#generateUsrname").attr("disabled", "true");
+        $("#submit").attr("disabled", "true");
+        $.post("/Discussion/GenerateUsername", {token:'@ViewBag.Token'}, function (message) {
+            $("#username").val(message);
+            $("#generateUsrname").removeAttr("disabled");
+            $("#submit").removeAttr("disabled");
+        });
+    }
+</script>
+
+<h2>Participant Registration</h2>
+
+<h6>
+    Hello @ViewBag.Name, welcome to Cloak! Click 'Generate' to get yourself a random and unique username. <br />
+    Your group can identify you only with this username, so feel free to keep clicking till you are satisfied with it.
+</h6>
+
+<form class="regForm" style="width:50%" method="post" action="RegisterParticipant">
+    @if (ViewBag.Error != null)
+    {
+        <label class="text-danger">@ViewBag.Error</label><br />
+    }
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" readonly style="display:inline;background:lightgray" />
+    <button id="generateUsrname" type="button" style="float:right;background-color:green" onclick="generateUsername()">Generate</button>
+    <button id="submit" type="submit">Submit</button>
+</form>
+
+<div id="logo">
+    <img src="~/Content/GDSS Logo.png" />
+</div>

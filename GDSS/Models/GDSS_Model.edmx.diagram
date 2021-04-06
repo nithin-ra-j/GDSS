@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0adcfb8d53064bd0ab189420a586177f" Name="Diagram1">
+        <EntityTypeShape EntityType="GDSS_DBModel.Discussion" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.Forum" Width="1.5" PointX="5.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.ForumComment" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.ForumReply" Width="1.5" PointX="9.75" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.Moderator" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.Participant" Width="1.5" PointX="5.25" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.Poll" Width="1.5" PointX="5.25" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.PollOption" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="GDSS_DBModel.PollVote" Width="1.5" PointX="9.75" PointY="6" IsExpanded="true" />
+        <AssociationConnector Association="GDSS_DBModel.FK__Discussio__Moder__267ABA7A" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__Forum__Discussio__5DCAEF64" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__Participa__Discu__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__Poll__Discussion__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__ForumComm__Forum__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__ForumComm__Parti__66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__ForumRepl__Forum__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__ForumRepl__Parti__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__PollVote__Partic__35BCFE0A" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__PollOptio__PollI__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__PollVote__PollID__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="GDSS_DBModel.FK__PollVote__PollOp__36B12243" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GDSS_DBModel.Username" Width="1.5" PointX="0.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

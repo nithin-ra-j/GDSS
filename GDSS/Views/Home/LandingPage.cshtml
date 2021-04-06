@@ -1,0 +1,139 @@
+﻿@model GDSS.Models.Moderator
+
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/Content/HomeCss.css" type="text/css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create three equal columns that floats next to each other */
+        .column1 {
+            float: left;
+            width: 15%;
+            padding: 10px;
+        }
+
+        .column2 {
+            float: left;
+            width: 45%;
+            padding: 10px;
+        }
+
+        .column3 {
+            float: left;
+            width: 40%;
+            padding: 10px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row">
+        <div class="column1">
+
+            <div class="outer">
+                <div class="progress" style="background-color:transparent">
+                    <div class="left">
+                        <div><b>Host a discussion</b></div>
+                        <div><b>Invite participants</b></div>
+                        <div><b>Get discussing!</b></div>
+                    </div>
+                    <div class="right">
+                        <div></div>
+                        <div></div>
+                        <div class="current"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column2">
+
+            <div class="container">
+
+                <span class="typcn typcn-thumbs-ok icon"></span>
+                <h2 class="preheader">Welcome to</h2>
+                <h1 class="header1">Cloak</h1>
+                <p class="paragraph">
+
+                    Make decisions more effectively, on the go, than anywhere else. Introducing Cloak,
+                    a group decision support system that helps you get into group discussions anytime, anywhere. It is all anonymous,
+                    meaning your identity is revealed only to the moderator so that you can express your opinions without feeling the pressure of office politics. Get discussing!
+
+                    <hr />
+                    Log into your moderator account or, if you do not have an active moderator account, enter your email address below and click 'Verify'.
+                    Your account is active only as long as you have an ongoing discussion.
+                    If you have been invited to take part in a discussion, head to your email and click on the invitation link or contact your organisation.
+
+                </p>
+                <form class="regForm" style="box-shadow:none;padding:7px" method="post" action="CallVerifyEmail">
+                    <h5>Host a Discussion</h5>
+                    <input type="email" id="hEmail" name="param" value="@ViewBag.hEmail" placeholder="Enter your email address" style="width:50%;display:inline" />
+                    <button type="submit" style="margin-left:2px;padding:8px 16px 8px 16px">Verify</button>
+                    @if (ViewBag.Error != null)
+                    {
+                        <br /><label class="text-danger">@ViewBag.Error</label>
+                    }
+
+                </form>
+
+            </div>
+
+
+        </div>
+        <div class="column3" style="float:right">
+            <form class="regForm" method="post" style="box-shadow:none;margin-top:110px;margin-left:120px" action="~/Moderator/Login">
+                <fieldset>
+                    <h5>Log in as Moderator</h5>
+                    @if (ViewBag.Message != null)
+                    {
+                        <label class="text-danger">@ViewBag.Message</label><br />
+                    }
+                    <label for="email">Email address: </label>
+                    @Html.EditorFor(model => model.email, new { @value = ViewBag.Email })
+                    @Html.ValidationMessageFor(model => model.email)
+
+
+
+                    <label for="password">
+                        Password: <a style="cursor:pointer" onclick="showPasswordFunction()">
+                            <i class="fas fa-eye point"></i>
+                        </a>
+                    </label>
+                    @Html.PasswordFor(model => model.password)
+                    @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
+                    <a style="float:right" href="~/Moderator/EnterEmail">Forgot password?</a><br />
+                    <button type="submit" style="width: 100px;margin-top:10px">Log in</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+
+<script>
+    function showPasswordFunction() {
+        var x = document.getElementById("password");
+        if (x.type == "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+</script>

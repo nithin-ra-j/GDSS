@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "About Us";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            /*font-family: Arial, Helvetica, sans-serif;*/
+            margin: 0;
+        }
+
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+        }
+
+        .about-section {
+            padding: 50px;
+            text-align: center;
+            color: white;
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+            .container::after, .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+        .title {
+            color: grey;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            .button:hover {
+                background-color: #555;
+            }
+
+
+        .column {
+            width: 25%;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="about-section">
+        <h1 style="color:black">ABOUT US </h1>
+        <p>We are a team of versatile individuals who possess various skill sets that complement each other in the software development front. All four of us have the right skills to take on a web-based project as we have completed academic projects using ASP.NET MVC framework. We are also familiar with Agile Methodology and different types of testing that will help deliver a quality product. Most importantly, we have the patience and drive to learn new technologies on-the-go if required.  </p>
+
+    </div>
+
+    <h2 style="text-align:center">Our Team</h2>
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Anand.jpg" alt="Anand" style="width:100%">
+                <div class="container">
+                    <h2>Anand Francis</h2>
+                    <p class="title">Project Manager</p>
+                    <p>anandfrancis001@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Abey.jpg" alt="Abey" style="width:100%">
+                <div class="container">
+                    <h2>Abey Kurian</h2>
+                    <p class="title">Tester</p>
+                    <p>abeyabrahamkurian@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Nithin.jpeg" alt="Nithin" style="width:100%">
+                <div class="container">
+                    <h2>Nithin Raj</h2>
+                    <p class="title">Developer, Database Manager</p>
+                    <p>raj.myidmail@gmail.com</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Bipin.jpeg" alt="Bipin" style="width:100%">
+                <div class="container">
+                    <h2>Bipin Gaspar</h2>
+                    <p class="title">Developer</p>
+                    <p>bipingaspar@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <h2 style="text-align:center">Client</h2>
+    <div class="row" style="justify-content:center">
+        <div class="text-center">
+            <img src="~/Content/Robert.jpg" alt="Robert" style="width:65%">
+            <div class="container">
+                <h2>Robert Sutcliffe</h2>
+                <p class="title" style="text-align:center">Client, Senior Lecturer</p>
+                <p style="text-align:center">robert.sutcliffe@weltec.ac.nz</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+
+

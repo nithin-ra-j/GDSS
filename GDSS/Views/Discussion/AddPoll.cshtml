@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Add Poll";
+}
+
+<h2>Add Poll</h2>
+
+
+
+
+<meta name="viewport" content="width=device-width" />
+<title>Index</title>
+
+<form class="regForm" method="post" action="~/Discussion/SavePoll" style="width:50%; margin-bottom:500px">
+
+    <label class="text-danger">@ViewBag.Error</label>
+    <br />
+    <label for="Question" style="">Enter question*</label>
+    <textarea id="Question" name="Question" maxlength="500">@ViewBag.Question</textarea>
+    <label for="optionA">Enter options*</label>
+    <input type="text" name="optionA" id="opionA" value="@ViewBag.optionA" />
+    <input type="text" name="optionB" id="opionB" value="@ViewBag.optionB" />
+    <!--Textboxes will be added here -->
+    <div id="TextBoxContainer">  </div>
+    <button id="btnAdd" type="button" onclick="AddTextBox()">Add options</button>
+    <button type="submit">Submit</button>
+
+</form>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+
+            function GetDynamicTextBox(value)
+            {
+
+            var div = $("<div />");
+
+                var textBox = $("<input />").attr("type", "textbox").attr("name", "options[]");
+            textBox.val(value);
+            div.append(textBox);
+
+            var button = $("<button>Remove</button>").attr("type", "button").attr("style","margin-bottom:10px");
+            button.attr("onclick", "RemoveTextBox(this)");
+            div.append(button);
+
+            return div;
+        }
+        function AddTextBox() {
+            var div = GetDynamicTextBox("");
+            $("#TextBoxContainer").append(div);
+        }
+
+        function RemoveTextBox(button) {
+            $(button).parent().remove();
+        }
+
+        $(function () {
+            var values = eval('@Html.Raw(ViewBag.Values)');
+            if (values != null) {
+                $("#TextBoxContainer").html("");
+                $(values).each(function () {
+                    $("#TextBoxContainer").append(GetDynamicTextBox(this));
+                });
+            }
+        });
+</script>
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+            $(function () {
+                alert("@ViewBag.Message")
+            });
+    </script>
+}
+
+
+

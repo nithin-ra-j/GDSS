@@ -1,0 +1,828 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GDSS_DBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Discussion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Topic" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="3000" Nullable="false" />
+          <Property Name="ClientName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ClientEmail" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="StartDateTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="DeletionDateTime" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="ModeratorEmail" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="PauseDateTime" Type="datetime2" Precision="0" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Content" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DiscussionID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="PostedOn" Type="datetime2" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Comment" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="ForumID" Type="int" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="PostedOn" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ForumReply">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Reply" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="ForumCommentID" Type="int" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="PostedOn" Type="datetime2" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Moderator">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="firstname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="254" Nullable="false" />
+          <Property Name="DiscussionID" Type="int" Nullable="false" />
+          <Property Name="Token" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="DiscussionID" Type="int" Nullable="false" />
+          <Property Name="NoOfVotes" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime2" Precision="0" Nullable="false" />
+          <Property Name="PostedOn" Type="datetime2" Precision="0" />
+          <Property Name="Status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PollOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Option" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="PollID" Type="int" Nullable="false" />
+          <Property Name="NoOfVotes" Type="int" Nullable="false" />
+          <Property Name="VotePercentage" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PollVote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantID" Type="int" Nullable="false" />
+          <Property Name="PollOptionID" Type="int" Nullable="false" />
+          <Property Name="PollID" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\GRADDIP IT\GDSS\GDSS\APP_DATA\GDSS_DB.MDF.dbo.Username' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Username">
+          <Key>
+            <PropertyRef Name="Adjective" />
+            <PropertyRef Name="Fish" />
+          </Key>
+          <Property Name="Adjective" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Fish" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Discussio__Moder__267ABA7A">
+          <End Role="Moderator" Type="Self.Moderator" Multiplicity="1" />
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moderator">
+              <PropertyRef Name="email" />
+            </Principal>
+            <Dependent Role="Discussion">
+              <PropertyRef Name="ModeratorEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Forum__Discussio__5DCAEF64">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Forum" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumComm__Forum__619B8048">
+          <End Role="Forum" Type="Self.Forum" Multiplicity="1" />
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumComment">
+              <PropertyRef Name="ForumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumComm__Parti__66603565">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumComment">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumRepl__Forum__6477ECF3">
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="1" />
+          <End Role="ForumReply" Type="Self.ForumReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumComment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumReply">
+              <PropertyRef Name="ForumCommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumRepl__Parti__6754599E">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="ForumReply" Type="Self.ForumReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumReply">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Participa__Discu__2A4B4B5E">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Poll__Discussion__2E1BDC42">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollOptio__PollI__32E0915F">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+          <End Role="PollOption" Type="Self.PollOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollOption">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__Partic__35BCFE0A">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__PollID__37A5467C">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__PollOp__36B12243">
+          <End Role="PollOption" Type="Self.PollOption" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollOption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="PollOptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="RegisterParticipant" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="token" Type="varchar" Mode="In" />
+          <Parameter Name="username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RegisterVote" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="polloptionid" Type="int" Mode="In" />
+          <Parameter Name="userid" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="GDSS_DBModelStoreContainer">
+          <EntitySet Name="Discussion" EntityType="Self.Discussion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Forum" EntityType="Self.Forum" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumComment" EntityType="Self.ForumComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ForumReply" EntityType="Self.ForumReply" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Moderator" EntityType="Self.Moderator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poll" EntityType="Self.Poll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PollOption" EntityType="Self.PollOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PollVote" EntityType="Self.PollVote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Username" EntityType="Self.Username" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Username].[Adjective] AS [Adjective], 
+    [Username].[Fish] AS [Fish]
+    FROM [dbo].[Username] AS [Username]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK__Discussio__Moder__267ABA7A" Association="Self.FK__Discussio__Moder__267ABA7A">
+            <End Role="Moderator" EntitySet="Moderator" />
+            <End Role="Discussion" EntitySet="Discussion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Forum__Discussio__5DCAEF64" Association="Self.FK__Forum__Discussio__5DCAEF64">
+            <End Role="Discussion" EntitySet="Discussion" />
+            <End Role="Forum" EntitySet="Forum" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumComm__Forum__619B8048" Association="Self.FK__ForumComm__Forum__619B8048">
+            <End Role="Forum" EntitySet="Forum" />
+            <End Role="ForumComment" EntitySet="ForumComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumComm__Parti__66603565" Association="Self.FK__ForumComm__Parti__66603565">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="ForumComment" EntitySet="ForumComment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumRepl__Forum__6477ECF3" Association="Self.FK__ForumRepl__Forum__6477ECF3">
+            <End Role="ForumComment" EntitySet="ForumComment" />
+            <End Role="ForumReply" EntitySet="ForumReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumRepl__Parti__6754599E" Association="Self.FK__ForumRepl__Parti__6754599E">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="ForumReply" EntitySet="ForumReply" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Participa__Discu__2A4B4B5E" Association="Self.FK__Participa__Discu__2A4B4B5E">
+            <End Role="Discussion" EntitySet="Discussion" />
+            <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Poll__Discussion__2E1BDC42" Association="Self.FK__Poll__Discussion__2E1BDC42">
+            <End Role="Discussion" EntitySet="Discussion" />
+            <End Role="Poll" EntitySet="Poll" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollOptio__PollI__32E0915F" Association="Self.FK__PollOptio__PollI__32E0915F">
+            <End Role="Poll" EntitySet="Poll" />
+            <End Role="PollOption" EntitySet="PollOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__Partic__35BCFE0A" Association="Self.FK__PollVote__Partic__35BCFE0A">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="PollVote" EntitySet="PollVote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__PollID__37A5467C" Association="Self.FK__PollVote__PollID__37A5467C">
+            <End Role="Poll" EntitySet="Poll" />
+            <End Role="PollVote" EntitySet="PollVote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__PollOp__36B12243" Association="Self.FK__PollVote__PollOp__36B12243">
+            <End Role="PollOption" EntitySet="PollOption" />
+            <End Role="PollVote" EntitySet="PollVote" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GDSS_DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Discussion">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Topic" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="3000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ClientEmail" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeletionDateTime" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ModeratorEmail" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Moderator" Relationship="Self.FK__Discussio__Moder__267ABA7A" FromRole="Discussion" ToRole="Moderator" />
+          <NavigationProperty Name="Fora" Relationship="Self.FK__Forum__Discussio__5DCAEF64" FromRole="Discussion" ToRole="Forum" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK__Participa__Discu__2A4B4B5E" FromRole="Discussion" ToRole="Participant" />
+          <NavigationProperty Name="Polls" Relationship="Self.FK__Poll__Discussion__2E1BDC42" FromRole="Discussion" ToRole="Poll" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PauseDateTime" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="Forum">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DiscussionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discussion" Relationship="Self.FK__Forum__Discussio__5DCAEF64" FromRole="Forum" ToRole="Discussion" />
+          <NavigationProperty Name="ForumComments" Relationship="Self.FK__ForumComm__Forum__619B8048" FromRole="Forum" ToRole="ForumComment" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PostedOn" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="ForumComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Comment" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ForumID" Type="Int32" Nullable="false" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Forum" Relationship="Self.FK__ForumComm__Forum__619B8048" FromRole="ForumComment" ToRole="Forum" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK__ForumComm__Parti__66603565" FromRole="ForumComment" ToRole="Participant" />
+          <NavigationProperty Name="ForumReplies" Relationship="Self.FK__ForumRepl__Forum__6477ECF3" FromRole="ForumComment" ToRole="ForumReply" />
+          <Property Name="PostedOn" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="ForumReply">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Reply" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ForumCommentID" Type="Int32" Nullable="false" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ForumComment" Relationship="Self.FK__ForumRepl__Forum__6477ECF3" FromRole="ForumReply" ToRole="ForumComment" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK__ForumRepl__Parti__6754599E" FromRole="ForumReply" ToRole="Participant" />
+          <Property Name="PostedOn" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Moderator">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Discussions" Relationship="Self.FK__Discussio__Moder__267ABA7A" FromRole="Moderator" ToRole="Discussion" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="254" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DiscussionID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discussion" Relationship="Self.FK__Participa__Discu__2A4B4B5E" FromRole="Participant" ToRole="Discussion" />
+          <NavigationProperty Name="ForumComments" Relationship="Self.FK__ForumComm__Parti__66603565" FromRole="Participant" ToRole="ForumComment" />
+          <NavigationProperty Name="ForumReplies" Relationship="Self.FK__ForumRepl__Parti__6754599E" FromRole="Participant" ToRole="ForumReply" />
+          <NavigationProperty Name="PollVotes" Relationship="Self.FK__PollVote__Partic__35BCFE0A" FromRole="Participant" ToRole="PollVote" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Token" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Poll">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DiscussionID" Type="Int32" Nullable="false" />
+          <Property Name="NoOfVotes" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Discussion" Relationship="Self.FK__Poll__Discussion__2E1BDC42" FromRole="Poll" ToRole="Discussion" />
+          <NavigationProperty Name="PollOptions" Relationship="Self.FK__PollOptio__PollI__32E0915F" FromRole="Poll" ToRole="PollOption" />
+          <NavigationProperty Name="PollVotes" Relationship="Self.FK__PollVote__PollID__37A5467C" FromRole="Poll" ToRole="PollVote" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="PostedOn" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="PollOption">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Option" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PollID" Type="Int32" Nullable="false" />
+          <Property Name="NoOfVotes" Type="Int32" Nullable="false" />
+          <Property Name="VotePercentage" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK__PollOptio__PollI__32E0915F" FromRole="PollOption" ToRole="Poll" />
+          <NavigationProperty Name="PollVotes" Relationship="Self.FK__PollVote__PollOp__36B12243" FromRole="PollOption" ToRole="PollVote" />
+        </EntityType>
+        <EntityType Name="PollVote">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantID" Type="Int32" Nullable="false" />
+          <Property Name="PollOptionID" Type="Int32" Nullable="false" />
+          <Property Name="PollID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK__PollVote__Partic__35BCFE0A" FromRole="PollVote" ToRole="Participant" />
+          <NavigationProperty Name="Poll" Relationship="Self.FK__PollVote__PollID__37A5467C" FromRole="PollVote" ToRole="Poll" />
+          <NavigationProperty Name="PollOption" Relationship="Self.FK__PollVote__PollOp__36B12243" FromRole="PollVote" ToRole="PollOption" />
+        </EntityType>
+        <Association Name="FK__Discussio__Moder__267ABA7A">
+          <End Role="Moderator" Type="Self.Moderator" Multiplicity="1" />
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Moderator">
+              <PropertyRef Name="email" />
+            </Principal>
+            <Dependent Role="Discussion">
+              <PropertyRef Name="ModeratorEmail" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Forum__Discussio__5DCAEF64">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Forum" Type="Self.Forum" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Forum">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Participa__Discu__2A4B4B5E">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Poll__Discussion__2E1BDC42">
+          <End Role="Discussion" Type="Self.Discussion" Multiplicity="1" />
+          <End Role="Poll" Type="Self.Poll" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Discussion">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Poll">
+              <PropertyRef Name="DiscussionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumComm__Forum__619B8048">
+          <End Role="Forum" Type="Self.Forum" Multiplicity="1" />
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forum">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumComment">
+              <PropertyRef Name="ForumID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumComm__Parti__66603565">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumComment">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumRepl__Forum__6477ECF3">
+          <End Role="ForumComment" Type="Self.ForumComment" Multiplicity="1" />
+          <End Role="ForumReply" Type="Self.ForumReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ForumComment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumReply">
+              <PropertyRef Name="ForumCommentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ForumRepl__Parti__6754599E">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="ForumReply" Type="Self.ForumReply" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ForumReply">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__Partic__35BCFE0A">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="ParticipantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollOptio__PollI__32E0915F">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+          <End Role="PollOption" Type="Self.PollOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollOption">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__PollID__37A5467C">
+          <End Role="Poll" Type="Self.Poll" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poll">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="PollID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PollVote__PollOp__36B12243">
+          <End Role="PollOption" Type="Self.PollOption" Multiplicity="1" />
+          <End Role="PollVote" Type="Self.PollVote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PollOption">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PollVote">
+              <PropertyRef Name="PollOptionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GDSS_DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Discussions" EntityType="Self.Discussion" />
+          <EntitySet Name="Fora" EntityType="Self.Forum" />
+          <EntitySet Name="ForumComments" EntityType="Self.ForumComment" />
+          <EntitySet Name="ForumReplies" EntityType="Self.ForumReply" />
+          <EntitySet Name="Moderators" EntityType="Self.Moderator" />
+          <EntitySet Name="Participants" EntityType="Self.Participant" />
+          <EntitySet Name="Polls" EntityType="Self.Poll" />
+          <EntitySet Name="PollOptions" EntityType="Self.PollOption" />
+          <EntitySet Name="PollVotes" EntityType="Self.PollVote" />
+          <AssociationSet Name="FK__Discussio__Moder__267ABA7A" Association="Self.FK__Discussio__Moder__267ABA7A">
+            <End Role="Moderator" EntitySet="Moderators" />
+            <End Role="Discussion" EntitySet="Discussions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Forum__Discussio__5DCAEF64" Association="Self.FK__Forum__Discussio__5DCAEF64">
+            <End Role="Discussion" EntitySet="Discussions" />
+            <End Role="Forum" EntitySet="Fora" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Participa__Discu__2A4B4B5E" Association="Self.FK__Participa__Discu__2A4B4B5E">
+            <End Role="Discussion" EntitySet="Discussions" />
+            <End Role="Participant" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Poll__Discussion__2E1BDC42" Association="Self.FK__Poll__Discussion__2E1BDC42">
+            <End Role="Discussion" EntitySet="Discussions" />
+            <End Role="Poll" EntitySet="Polls" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumComm__Forum__619B8048" Association="Self.FK__ForumComm__Forum__619B8048">
+            <End Role="Forum" EntitySet="Fora" />
+            <End Role="ForumComment" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumComm__Parti__66603565" Association="Self.FK__ForumComm__Parti__66603565">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="ForumComment" EntitySet="ForumComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumRepl__Forum__6477ECF3" Association="Self.FK__ForumRepl__Forum__6477ECF3">
+            <End Role="ForumComment" EntitySet="ForumComments" />
+            <End Role="ForumReply" EntitySet="ForumReplies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ForumRepl__Parti__6754599E" Association="Self.FK__ForumRepl__Parti__6754599E">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="ForumReply" EntitySet="ForumReplies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__Partic__35BCFE0A" Association="Self.FK__PollVote__Partic__35BCFE0A">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="PollVote" EntitySet="PollVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollOptio__PollI__32E0915F" Association="Self.FK__PollOptio__PollI__32E0915F">
+            <End Role="Poll" EntitySet="Polls" />
+            <End Role="PollOption" EntitySet="PollOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__PollID__37A5467C" Association="Self.FK__PollVote__PollID__37A5467C">
+            <End Role="Poll" EntitySet="Polls" />
+            <End Role="PollVote" EntitySet="PollVotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PollVote__PollOp__36B12243" Association="Self.FK__PollVote__PollOp__36B12243">
+            <End Role="PollOption" EntitySet="PollOptions" />
+            <End Role="PollVote" EntitySet="PollVotes" />
+          </AssociationSet>
+          <EntitySet Name="Usernames" EntityType="GDSS_DBModel.Username" />
+          <FunctionImport Name="RegisterParticipant">
+            <Parameter Name="token" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RegisterVote">
+            <Parameter Name="polloptionid" Mode="In" Type="Int32" />
+            <Parameter Name="userid" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="Username">
+          <Key>
+            <PropertyRef Name="Adjective" />
+            <PropertyRef Name="Fish" />
+          </Key>
+          <Property Name="Adjective" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Fish" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="GDSS_DBModelStoreContainer" CdmEntityContainer="GDSS_DBEntities">
+          <EntitySetMapping Name="Discussions">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Discussion">
+              <MappingFragment StoreEntitySet="Discussion">
+                <ScalarProperty Name="PauseDateTime" ColumnName="PauseDateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Topic" ColumnName="Topic" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+                <ScalarProperty Name="ClientEmail" ColumnName="ClientEmail" />
+                <ScalarProperty Name="StartDateTime" ColumnName="StartDateTime" />
+                <ScalarProperty Name="DeletionDateTime" ColumnName="DeletionDateTime" />
+                <ScalarProperty Name="ModeratorEmail" ColumnName="ModeratorEmail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fora">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Forum">
+              <MappingFragment StoreEntitySet="Forum">
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="DiscussionID" ColumnName="DiscussionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumComments">
+            <EntityTypeMapping TypeName="GDSS_DBModel.ForumComment">
+              <MappingFragment StoreEntitySet="ForumComment">
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ForumID" ColumnName="ForumID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ForumReplies">
+            <EntityTypeMapping TypeName="GDSS_DBModel.ForumReply">
+              <MappingFragment StoreEntitySet="ForumReply">
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Reply" ColumnName="Reply" />
+                <ScalarProperty Name="ForumCommentID" ColumnName="ForumCommentID" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Moderators">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Moderator">
+              <MappingFragment StoreEntitySet="Moderator">
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Participant">
+              <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="Token" ColumnName="Token" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="DiscussionID" ColumnName="DiscussionID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Polls">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Poll">
+              <MappingFragment StoreEntitySet="Poll">
+                <ScalarProperty Name="PostedOn" ColumnName="PostedOn" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="DiscussionID" ColumnName="DiscussionID" />
+                <ScalarProperty Name="NoOfVotes" ColumnName="NoOfVotes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollOptions">
+            <EntityTypeMapping TypeName="GDSS_DBModel.PollOption">
+              <MappingFragment StoreEntitySet="PollOption">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Option" ColumnName="Option" />
+                <ScalarProperty Name="PollID" ColumnName="PollID" />
+                <ScalarProperty Name="NoOfVotes" ColumnName="NoOfVotes" />
+                <ScalarProperty Name="VotePercentage" ColumnName="VotePercentage" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PollVotes">
+            <EntityTypeMapping TypeName="GDSS_DBModel.PollVote">
+              <MappingFragment StoreEntitySet="PollVote">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParticipantID" ColumnName="ParticipantID" />
+                <ScalarProperty Name="PollOptionID" ColumnName="PollOptionID" />
+                <ScalarProperty Name="PollID" ColumnName="PollID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usernames">
+            <EntityTypeMapping TypeName="GDSS_DBModel.Username">
+              <MappingFragment StoreEntitySet="Username">
+                <ScalarProperty Name="Fish" ColumnName="Fish" />
+                <ScalarProperty Name="Adjective" ColumnName="Adjective" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RegisterParticipant" FunctionName="GDSS_DBModel.Store.RegisterParticipant" />
+          <FunctionImportMapping FunctionImportName="RegisterVote" FunctionName="GDSS_DBModel.Store.RegisterVote" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

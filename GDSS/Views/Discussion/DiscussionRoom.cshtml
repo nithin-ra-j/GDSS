@@ -1,0 +1,73 @@
+﻿@{
+    Layout = null;
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Cloak GDSS</title>
+    <script src="https://kit.fontawesome.com/9486839852.js" crossorigin="anonymous"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script language="JavaScript" type="text/javascript" src="~/Scripts/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="~/Content/NewCSS.css" type="text/css" />
+    <script type="text/javascript" src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+    <script src="../signalr/hubs"></script>
+</head>
+<body>
+    <div id="bg-white" class="navbar navbar-expand-md fixed-top shadow-sm">
+        <div class="container">
+            <img style="cursor:pointer;background-color:#ececec;box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)" src="~/Content/GDSS Logo.png" width="75" height="75" onclick="location.href='@Url.Action("OnLogoClick","Home")'" />
+            <button class="navbar-toggler collapsed text-primary" type="button" data-toggle="collapse" data-target="#navbarDefault" aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-collapse collapse justify-content-end" id="navbarDefault">
+                <ul class="navbar-nav small">
+                    <li class="nav-item font-weight-light text-uppercase">
+                        <a id="aCustom" href="~/Home/AboutUs" class="nav-link">About Us</a>
+                    </li>
+                    <li class="nav-item font-weight-light text-uppercase">
+                        <a id="aCustom" href="~/Home/ContactUs" class="nav-link">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid body-content" style="padding-top: 100px;padding-bottom:0;padding-left:100px;padding-right:100px">
+        @{
+            ViewBag.Title = "Discussion Room";
+        }
+        <div id="tools" style="padding-top:100px">
+            <h2>Discussion Room</h2>
+            <div id="ToolContainer" style="width:30%;border:1px solid black;float:left"></div>
+            @*<div id="WhiteBoardContainer" style="width:auto;border:1px solid black;float:left"></div>*@
+        </div>
+        <script>
+            $(document).ready(function () {
+                $("#tools").parent().removeAttr("style");
+                if ('@ViewBag.Poll' == 'true')
+                    $("#ToolContainer").load("ViewPoll");
+                else if ('@ViewBag.Forum' == 'true')
+                    $("#ToolContainer").load("ViewForum");
+                else
+                    $("#ToolContainer").text("Tools that the moderator adds will appear here.");
+                var notification = $.connection.MyHub;
+                notification.client.updatePoll = function () {
+                    $("#ToolContainer").load("ViewPoll");
+                };
+                notification.client.updateForum = function () {
+                    $("#ToolContainer").load("ViewForum");
+                };
+                $.connection.hub.start();
+                //$("#WhiteBoardContainer").load("WhiteBoard");
+            });
+        </script>
+    </div>
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

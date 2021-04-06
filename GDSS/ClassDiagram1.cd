@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GDSS.Controllers.HomeController">
+    <Position X="1.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAACAIAAAAAAAAQAAAEABAAAAE=</HashCode>
+      <FileName>Controllers\HomeController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ModeratorController" />
+      <Property Name="DiscussionController" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Controllers.ModeratorController">
+    <Position X="4.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEAAMAAAAIAAACABoAMBgACAAAQCEQQgAAAAE=</HashCode>
+      <FileName>Controllers\ModeratorController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Discussion" />
+      <Property Name="Moderator" />
+      <Property Name="DiscussionController" />
+      <Property Name="Forum" />
+      <Property Name="Participant" />
+      <Property Name="Poll" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.Discussion">
+    <Position X="8" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAgFAAABAAAAAAAEAAIAAhAQCAQACAAAAA=</HashCode>
+      <FileName>Models\Discussion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GDSS.Models.Moderator">
+    <Position X="8" Y="5.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAhAAAAgAAAAAAAAAAAAAAAAAAAAAgAABAA=</HashCode>
+      <FileName>Models\Moderator.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GDSS.Controllers.DiscussionController">
+    <Position X="4.25" Y="5.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="GDSS.Controllers.DiscussionController.dash">
+        <TypeIdentifier>
+          <NewMemberFileName>Controllers\DiscussionController.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>ABIAAAQEAAAIkgAEAQCCQAIBAAAGSAEIBCMQAkAAAAA=</HashCode>
+      <FileName>Controllers\DiscussionController.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Forum" />
+      <Property Name="Poll" />
+      <Property Name="Discussion" />
+      <Property Name="Username" />
+      <Property Name="Participant" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.Forum">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAgAAAEgQAAACAAAAAQACAAAACAAAAAAAAAA=</HashCode>
+      <FileName>Models\Forum.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ForumComment" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.ForumComment">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEACAAACgAABAAAAAAAAAAgAAAACAAAgAAAAA=</HashCode>
+      <FileName>Models\ForumComment.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="ForumReply" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.ForumReply">
+    <Position X="15.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAQgAAAAAAAAAAQAAgAAAACAgAAAAAAA=</HashCode>
+      <FileName>Models\ForumReply.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GDSS.Models.Poll">
+    <Position X="10.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAgQAAQCQAAAAIACAEAEAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Poll.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PollOption" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.PollOption">
+    <Position X="13.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAIAAAAAAAAAAUACAAAAAAACEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\PollOption.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="PollVote" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="GDSS.Models.PollVote">
+    <Position X="15.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEAEAAAAAAIAAiAAAACAAAAAAAAA=</HashCode>
+      <FileName>Models\PollVote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GDSS.Models.Participant">
+    <Position X="18" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEACAAAAAQARQCAAQAAAAAAAAACAAAAAABAAA=</HashCode>
+      <FileName>Models\Participant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GDSS.Models.Username">
+    <Position X="18" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Username.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

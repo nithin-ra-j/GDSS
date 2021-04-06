@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "Edit Discussion";
+}
+
+<form class="regForm" id="editdiscussion" style="width:50%" name="reggg" method="post" action="PerformEditDiscussion">
+    <div>
+        <fieldset>
+            <div class="header">
+                <img src="~/Content/logod.jpg" alt="logo" />
+            </div>
+            <h1 class="fs-title">Edit discussion</h1>
+            <h2 class="fs-subtitle">Set discussion parameters!</h2>
+            <br /><br />
+            <label for="Topic">Topic</label> <span id="error-topic" style="color:red;font-size:small "> </span>
+            <input type="text" name="Topic" id="Topic" value="@ViewBag.Topic">
+            <label for="message">Description</label> <span id="error-message" style="color:red;font-size:small "> </span>
+            <div style="font-size:10px">  Remaining Character  <span id="count"> </span></div>
+            <textarea id="message" cols="30" name="Description" rows="10" maxlength="3000">@ViewBag.Description</textarea>
+            <label for="cname">Client's Name</label> <span id="error-clName" style="color:red;font-size:small "> </span>
+            <span id="errorcname" style="color:red;font-size:small "> </span>
+            <input type="text" name="ClientName" id="cname" value="@ViewBag.ClientName">
+            <label for="clientEmmail">Client Email</label> <span id="error-clientEmail" style="color:red;font-size:small "> </span>
+            <span id="clerror" style="color:red"></span>
+            <input type="email" id="clientEmmail" name="ClientEmail" value="@ViewBag.ClientEmail">
+
+            <label for="sdate">Start date and time</label> <span id="error-sdate" style="color:red;font-size:small "> </span>
+            @if (ViewBag.Status == "Upcoming")
+            {
+                <input type="datetime-local" id="sdate" name="StartDateTime" value="@ViewBag.StartDateTime">
+            }
+            else
+            {
+                <input type="datetime-local" id="sdate" name="StartDateTime" value="@ViewBag.StartDateTime" readonly style="background:lightgray">
+            }
+            <label for="ddate">Deletion date and time</label> <span id="error-ddate" style="color:red;font-size:small "> </span>
+            <input type="datetime-local" id="ddate" name="DeletionDateTime" value="@ViewBag.DeletionDateTime">
+        </fieldset>
+    </div>
+
+    <div style="overflow:auto;">
+        <div style="float:right;">
+            <button type="button" onclick=" return formValidation()">Submit</button>
+        </div>
+    </div>
+
+    <div id="logo">
+        <img src="~/Content/GDSS Logo.png" />
+    </div>
+
+    <script>
+
+        function redirect() {
+            document.getElementById("editdiscussion").submit();
+        }
+
+
+        function formValidation() {
+
+            var topic = document.forms["reggg"]["Topic"].value;
+            var description = document.forms["reggg"]["Description"].value;
+            var clientname = document.forms["reggg"]["ClientName"].value;
+            var clientemail = document.forms["reggg"]["ClientEmail"].value;
+            var sdate = document.forms["reggg"]["StartDateTime"].value;
+            var ddate = document.forms["reggg"]["DeletionDateTime"].value;
+
+            if (topic == "") {
+
+                document.getElementById('error-topic').innerHTML = "   &nbsp;Please enter the Topic *"
+                document.reggg.Topic.focus();
+                document.getElementById('clerror').style.visibility = "visible";
+                return false();
+            }
+
+            if (topic != "") {
+                document.getElementById('error-topic').style.visibility = "hidden";
+
+            }
+
+
+
+
+            if (description == "") {
+
+                document.getElementById('error-message').innerHTML = "   &nbsp;Please enter Description *"
+                document.reggg.Description.focus();
+                document.getElementById('error-message').style.visibility = "visible";
+                return false();
+            }
+
+            if (description != "") {
+                document.getElementById('error-message').style.visibility = "hidden";
+
+            }
+
+
+
+            if (clientname == "") {
+
+                document.getElementById('error-clName').innerHTML = "   &nbsp;Please enter Client Name *"
+                document.reggg.ClientName.focus();
+                document.getElementById('error-clName').style.visibility = "visible";
+                return false();
+            }
+
+            if (clientname != "") {
+                document.getElementById('error-clName').style.visibility = "hidden";
+
+                var lastn = document.getElementById("cname").value;
+                var errorcname = document.getElementById("errorcname");
+                errorcname.innerHTML = "";
+                var expr = /^([a-zA-Z ]){1,30}$/;
+
+                if (!expr.test(lastn)) {
+                    errorcname.innerHTML = "Invalid Client Name.";
+                    return false();
+
+                }
+
+
+
+
+
+
+            }
+
+
+
+
+
+
+
+
+
+            if (clientemail == "") {
+
+                document.getElementById('error-clientEmail').innerHTML = "   &nbsp;Please enter Client Email*"
+                document.reggg.ClientEmail.focus();
+                return false();
+
+            }
+
+            if (clientemail != "") {
+                document.getElementById('error-clientEmail').style.visibility = "hidden";
+                var email = document.getElementById("clientEmmail").value;
+                var clerror = document.getElementById("clerror");
+                clerror.innerHTML = "";
+
+                var expr = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+                if (!expr.test(email)) {
+                    clerror.innerHTML = "&emsp;&nbsp;&nbsp;&nbsp;&emsp;&emsp;&emsp;&emsp;Invalid email address.";
+                    return false();
+                }
+            }
+
+            if (sdate == "") {
+
+                document.getElementById('error-sdate').innerHTML = "   &nbsp;Please select the start date*"
+                document.getElementById('error-sdate').style.visibility = "visible";
+                return false();
+            }
+
+            if (sdate != "") {
+                document.getElementById('error-sdate').style.visibility = "hidden";
+
+            }
+
+            if (ddate == "") {
+
+                document.getElementById('error-ddate').innerHTML = "   &nbsp;Please select the End date*"
+                document.getElementById('error-ddate').style.visibility = "visible";
+                return false();
+            }
+
+
+
+
+
+
+
+
+            if (ddate != "") {
+                document.getElementById('error-ddate').style.visibility = "hidden";
+                return redirect();
+            }
+
+
+
+
+
+
+
+
+        }
+
+
+
+        $("#ddate").change(function () {
+            var startDate = document.getElementById("sdate").value;
+            var endDate = document.getElementById("ddate").value;
+
+            if ((Date.parse(startDate) >= Date.parse(endDate))) {
+                alert("End date should be after the Start date");
+                document.getElementById("ddate").value = "";
+            }
+        });
+
+
+
+
+        $(document).ready(function () {
+
+
+
+            var input = document.getElementById("sdate");
+            var today = new Date();
+
+            var ddate = today.getDate();
+            if (ddate < 10) { ddate = "0" + ddate; }
+            var month = today.getMonth() + 1;
+            if (month < 10) { month = "0" + month; }
+            var date = today.getFullYear() + '-' + month + '-' + ddate;
+            var t1 = today.getHours();
+            if (t1 < 10) { t1 = "0" + t1; }
+            var t2 = today.getMinutes();
+            if (t2 < 10) { t2 = "0" + t2; }
+            var time = t1 + ":" + t2;
+            var dateTime = date + 'T' + time;
+            input.setAttribute('min', dateTime);
+
+        });
+
+
+
+
+
+
+
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+</form>

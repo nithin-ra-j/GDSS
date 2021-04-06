@@ -1,0 +1,141 @@
+﻿
+@{
+    ViewBag.Title = "Tool Hub";
+}
+
+@using GDSS.Models;
+
+<h2>Tool Hub</h2>
+
+<br />
+<br />
+
+<div id="pollContainer">
+
+    <h3>Polls</h3>
+    <hr />
+
+    @if (ViewBag.Polls != null)
+    {
+        foreach (Poll poll in ViewBag.Polls)
+        {
+            <div>
+                <p hidden>@poll.Id</p>
+                <h5>@poll.Question</h5>
+                @if (poll.Status == "Saved")
+                {
+                    <h6 style="color:lightgray">Created on @poll.CreatedOn</h6>
+                    <div style="float:right">
+                        <h5 style="color:darkorange">@poll.Status</h5>
+                        @if (ViewBag.NoPush == null)
+                        {
+                            <button id="btnPush" style="background-color:green;display:inline">Push to discussion</button>
+                        }
+                        else
+                        {
+                            <button id="btnPush" disabled style="background-color:green;display:inline">Push to discussion</button>
+                        }
+                        <button id="btnDelete" style="background-color:darkred;float:right">Delete</button>
+                    </div>
+                }
+                else
+                {
+                    <h6 style="color:lightgray">Posted on @poll.PostedOn</h6>
+                    <div style="float:right">
+                        <h5 style="color:green">@poll.Status</h5>
+                        <button id="btnEnd" style="background-color:darkred">End</button>
+                    </div>
+                }
+            </div>
+            <hr />
+        }
+    }
+</div>
+
+<br />
+
+<div id="forumContainer">
+
+    <h3>Forums</h3>
+    <hr />
+
+    @if (ViewBag.Forums != null)
+    {
+        foreach (Forum forum in ViewBag.Forums)
+        {
+            <div>
+                <p hidden>@forum.Id</p>
+                <h5>@forum.Title</h5>
+                @if (forum.Status == "Saved")
+                {
+                    <h6 style="color:lightgray">Created on @forum.CreatedOn</h6>
+                    <div style="float:right">
+                        <h5 style="color:darkorange">@forum.Status</h5>
+                        @if (ViewBag.NoPush == null)
+                        {
+                            <button id="btnPush" style="background-color:green;display:inline">Push to discussion</button>
+                        }
+                        else
+                        {
+                            <button disabled id="btnPush" style="background-color:green;display:inline">Push to discussion</button>
+                        }
+                        <button id="btnDelete" style="background-color:darkred;float:right">Delete</button>
+                    </div>
+                }
+                else
+                {
+                    <h6 style="color:lightgray">Posted on @forum.PostedOn</h6>
+                    <div style="float:right">
+                        <h5 style="color:green">@forum.Status</h5>
+                        <button id="btnEnd" style="background-color:darkred">End</button>
+                    </div>
+                }
+            </div>
+            <hr />
+        }
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#pollContainer").on("click", "button", function () {
+            var id = $(this).attr("id");
+            var pollID = parseInt($(this).parent().parent().find("p").text());
+            var op;
+            switch (id) {
+                case "btnPush":
+                    op = "push";
+                    break;
+                case "btnDelete":
+                    op = "delete";
+                    break;
+                case "btnEnd":
+                    op = "end";
+                    break;
+            }
+            $.post("ChangePollState", { op, pollID }, function () {
+                location.reload();
+            });
+        });
+
+        $("#forumContainer").on("click", "button", function () {
+            var id = $(this).attr("id");
+            var forumID = parseInt($(this).parent().parent().find("p").text());
+            var op;
+            switch (id) {
+                case "btnPush":
+                    op = "push";
+                    break;
+                case "btnDelete":
+                    op = "delete";
+                    break;
+                case "btnEnd":
+                    op = "end";
+                    break;
+            }
+            $.post("ChangeForumState", { op, forumID }, function () {
+                location.reload();
+            });
+        });
+    });
+</script>

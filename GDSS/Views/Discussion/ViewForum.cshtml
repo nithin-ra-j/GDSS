@@ -1,0 +1,309 @@
+﻿@*<style>
+        body {
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :link {
+            color: inherit;
+        }
+
+        .post--card {
+            max-width: 765px;
+            min-wdth: 320px;
+            /*   margin: 15px; */
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            box-shadow: 0 0 20px 2px #ddd;
+            border-radius: 2px;
+        }
+
+            .post--card header {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+
+        .header {
+            color: #424242;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        .post--date::before {
+            content: ',';
+            margin-right: 0.6em;
+        }
+
+        .post--date {
+            font-weight: 400;
+            color: #757575;
+        }
+
+        .post--card article {
+            font-weight: 400;
+            color: #616161;
+            line-height: 1.5;
+        }
+
+        .post--card footer {
+            margin: 1rem;
+            margin-bottom: 0;
+            color: #BDBDBD;
+        }
+
+            .post--card footer span {
+                position: relative;
+            }
+
+                .post--card footer span:last-of-type:before {
+                    content: '\2022';
+                    margin-right: 3px;
+                }
+
+        .post-reply {
+            color: #2979FF;
+            text-decoration: none;
+        }
+
+        .reply {
+            margin-top: 1rem;
+        }
+
+            .reply input {
+                width: 100%;
+                padding: 0.5rem;
+                font-size: 1rem;
+                border: 1px solid rgba(0,0,0,0.4);
+                /*   border-radius: 2rem; */
+                color: #757575;
+                outline: none;
+            }
+
+        .comment__area {
+            margin: 1rem;
+        }
+
+        div[id^="post"] {
+            max-height: 256px;
+            overflow-y: scroll;
+            border: 1px solid rgba(0,0,0,0.2);
+        }
+
+        [name='data-post']:last-of-type {
+            border-bottom: none;
+        }
+
+        [name='data-post'] {
+            padding: 0.256rem;
+            color: #757575;
+            list-style: decimal;
+            border-bottom: 1px solid rgba(0,0,0,0.2);
+            outline: none;
+        }
+
+            [name='data-post'] small {
+                color: #BDBDBD;
+            }
+
+        .hidden {
+            display: none;
+        }
+
+
+
+        .post--card header {
+            flex-direction: column;
+        }
+
+        .header,
+        .post--date::before {
+            content: '';
+            margin: 0;
+        }
+        }
+    </style>
+    <script>
+        $(function () {
+            let $reply = $(".post-reply");
+            var val;
+            let $data_count = $("[data-count]");
+            let $reply_div = $("#reply-div");
+            let $reply_box = $("#reply-box");
+            var $reply_post = $("#post1");
+            var $post_count = $reply_post.find("li").length;
+
+            //check display count
+            //on loaded script
+            if ($("#post1")) {
+                $data_count.text($post_count + " ");
+            }
+
+            // click reply
+            $reply.on("click", function () {
+                if ($reply_div.hasClass("hidden")) {
+                    $("#reply-div").removeClass("hidden");
+                    $("#reply-box").focus();
+                } else {
+                    $("#reply-div").addClass("hidden");
+                }
+            });
+
+            $reply_box.blur(function () {
+                $("#reply-div").addClass("hidden");
+                $("#reply-box").val("");
+            });
+
+            // keyboard keys
+            $reply_box.on("keyup", function (e) {
+                e.preventDefault();
+                if (e.which === 13 && $(this).val() != "") {
+                    val = $(this).val();
+                    this.blur();
+                    doPost();
+                    $post_count = $reply_post.find("li").length;
+                    $data_count.text($post_count + " ");
+                    $post_count > 0 ? $data_count.attr('href', '#') : null;
+                    console.log($post_count);
+                }
+                // escape key
+                if (e.which === 27) {
+                    $("#reply-div").addClass("hidden");
+                    $("#reply-box").val("");
+                }
+            });
+
+            // postting
+            function doPost() {
+                // clone post text
+                var dt = new Date();
+                var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                var time =
+                    // days[dt.getDay()] + ' ' + months[dt.getMonth()] + ' ' + dt.getFullYear() +
+                    '<br> ' + dt.getDate() + '/' + dt.getMonth() + '/' + dt.getFullYear() + ' ' +
+                    dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+                let $data_comment = $("#dummy-element").find("[name=data-post]").clone();
+                $data_comment.text(val);
+                $reply_post.append($data_comment);
+                console.log($data_comment);
+                $data_comment.append('<small>' + time + '</small>');
+            }
+        });
+
+    </script>
+    <br />
+    <br />
+    <div class="post--card">
+        <header>
+            <i class="fas fa-id-card"></i>
+            <h3>@ViewBag.Heading</h3>
+        </header>
+        <article>
+            @ViewBag.Description
+        </article>
+
+        <footer>
+            <div class="contain">
+                <span data-count></span><span>comment</span>
+                <span><a class="post-reply" href="#">Comment</a></span>
+            </div>
+            <div id="reply-div" class="reply hidden">
+                <input id='reply-box' type="text" autofocus>
+            </div>
+        </footer>
+        <div class="comment__area">
+            <div id="dummy-element" class="hidden">
+                <li name="data-post" />
+            </div>
+            <div id="post1"></div>
+        </div>
+    </div>*@
+<style>
+    .comment {
+        font-size: 1em
+    }
+
+    .reply {
+        font-size: 0.75em
+    }
+
+    a {
+        cursor: pointer;
+    }
+</style>
+
+
+@{
+    ViewBag.Title = "View Forum";
+}
+
+@using GDSS.Models;
+
+@if (ViewBag.ForumTitle != null)
+{
+    <h3>@ViewBag.ForumTitle</h3>
+    <h5>@ViewBag.Content</h5>
+    <hr />
+    <input type="text" id="inputComment" placeholder="Comment" style="display:inline" />
+    <a id="postComment" style="float:right">Post</a>
+    <br />
+    if (ViewBag.CommentReplies != null)
+    {
+        <div id="commentContainer" style="background-color:lightgray">
+            @foreach (KeyValuePair<ForumComment, List<ForumReply>> pair in ViewBag.CommentReplies)
+            {
+                <br />
+                ForumComment comment = @pair.Key;
+                <div id="comment">
+                    <p hidden id="commentID">@comment.Id</p>
+                    <p class="comment" style="display:inline">@comment.Comment</p>
+                    <input type="text" id="inputReply" placeholder="Reply" style="display:inline" />
+                    <a id="btnReply" style="float:right">Reply</a>
+                    <a id="postReply" hidden style="float:right">Post</a>
+                    @if (pair.Value.Count > 0)
+                    {
+                        <div id="reply">
+                            @foreach (ForumReply reply in pair.Value)
+                            {
+                                <p class="reply">@reply.Reply</p>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    }
+}
+
+
+<script>
+    $(document).ready(function () {
+        $("#postComment").on("click", function () {
+            var comment = $("#inputComment").val();
+            $.post("SaveForumComment", { forumID: '@ViewBag.Id', comment: comment }, function () {
+                location.reload();
+            });
+        });
+        $("#commentContainer").on("click", "#btnReply", function () {
+            $(this).attr("hidden", "hidden");
+            $(this).parent().find("#postReply").removeAttr("hidden");
+        });
+        $("#commentContainer").on("click", "#postReply", function () {
+            var commentID = $(this).parent().find("#commentID").text();
+            var reply = $(this).parent().find("#inputReply").val();
+            $.post("SaveCommentReply", { commentID, reply }, function () {
+                location.reload();
+            });
+        });
+    });
+</script>
